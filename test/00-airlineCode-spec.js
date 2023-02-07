@@ -8,12 +8,12 @@ const { runValidations, runConstraints } = require('./utils/test-utils');
 const data = require('./data/airplane-values');
 const { VALID, INVALID } = data;
 
-describe('`cruisingAltitudeFt` has the proper constraints and validations', () => {
+describe('`airlineCode` has the proper constraints and validations', () => {
   before(async function () {
     return await resetDB();
   });
 
-  const columnName = 'cruisingAltitudeFt';
+  const columnName = 'airlineCode';
 
   it('allows valid data', async () => {
     for (let value of data[columnName][VALID]) {
@@ -34,11 +34,11 @@ describe('`cruisingAltitudeFt` has the proper constraints and validations', () =
         .to.eventually.be.rejectedWith(Error);
     }
 
-    // test that it can be null in SQLite3
+    // test not null in SQLite3
     await expect(
       runConstraints({ [columnName]: null }),
-      `"${columnName}" was supposed to pass constraints when set to "NULL"`
+      `"${columnName}" was supposed to fail constraints when set to "NULL"`
     )
-      .to.not.eventually.be.rejectedWith(Error);
+      .to.eventually.be.rejectedWith(Error);
   });
 });

@@ -5,13 +5,11 @@ const { VALID } = data;
 const testingTable = 'Airplanes';
 
 const COLUMN_NAMES = [
+  'airlineCode',
   'flightNumber',
-  'model',
   'inService',
-  'homeBase',
   'maxNumPassengers',
   'currentNumPassengers',
-  'cruisingAltitudeFt',
   'firstFlightDate',
 ];
 

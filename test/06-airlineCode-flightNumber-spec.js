@@ -8,17 +8,17 @@ const { runValidations, runConstraints } = require('./utils/test-utils');
 const data = require('./data/airplane-values');
 const { VALID, INVALID } = data;
 
-describe('`homeBase` and `cruisingAltitudeFt` combination cannot be repeated', () => {
+describe('`airlineCode` and `flightNumber` combination cannot be repeated', () => {
   before(async function () {
     return await resetDB();
   });
 
-  const columnName = 'homeBase';
+  const columnName = 'airlineCode';
+  const otherColumnName = 'flightNumber';
 
-  it('does not allow `homeBase` and `cruisingAltitudeFt` combination to be repeated', async () => {
-    let value = 'LHR';
-    let otherColumnName = 'cruisingAltitudeFt';
-    let otherValue = 30000; // 30,000
+  it('does not allow `airlineCode` and `flightNumber` combination to be repeated', async () => {
+    let value = 'AA';
+    let otherValue = 1000; // 1,000
     await expect(
       runConstraints({
         [columnName]: value,
@@ -30,7 +30,6 @@ describe('`homeBase` and `cruisingAltitudeFt` combination cannot be repeated', (
 
     await expect(
       runConstraints({
-        flightNumber: 'BA98',
         [columnName]: value,
         [otherColumnName]: otherValue
       }),
@@ -39,8 +38,8 @@ describe('`homeBase` and `cruisingAltitudeFt` combination cannot be repeated', (
       .to.eventually.be.rejectedWith(Error);
   });
 
-  it('allows `homeBase` to be repeated', async () => {
-    let value = 'LHR';
+  it('allows `airlineCode` to be repeated', async () => {
+    let value = 'BB';
     await expect(
       runConstraints({
         [columnName]: value,
@@ -49,33 +48,35 @@ describe('`homeBase` and `cruisingAltitudeFt` combination cannot be repeated', (
     )
       .to.not.eventually.be.rejectedWith(Error);
 
+    let otherValue = '1000';
     await expect(
       runConstraints({
-        flightNumber: 'BA98',
         [columnName]: value,
+        [otherColumnName]: otherValue
       }),
       `Incorrectly passed constraints when two entries had "${columnName}" set to "${value}"`
     )
-      .to.eventually.be.rejectedWith(Error);
+      .to.not.eventually.be.rejectedWith(Error);
   });
 
-  it('allows `cruisingAltitudeFt` to be repeated', async () => {
-    let value = '30000';
+  it('allows `flightNumber` to be repeated', async () => {
+    let otherValue = '1000';
     await expect(
       runConstraints({
-        [columnName]: value,
+        [otherColumnName]: otherValue,
       }, false),
-      `Incorrectly failed constraints when "${columnName}" was set to "${value}"`
+      `Incorrectly failed constraints when "${otherColumnName}" was set to "${otherValue}"`
     )
       .to.not.eventually.be.rejectedWith(Error);
 
+    let value = 'AA';
     await expect(
       runConstraints({
-        flightNumber: 'BA98',
         [columnName]: value,
+        [otherColumnName]: otherValue,
       }),
-      `Incorrectly passed constraints when two entries had "${columnName}" set to "${value}"`
+      `Incorrectly passed constraints when two entries had "${otherColumnName}" set to "${otherValue}"`
     )
-      .to.eventually.be.rejectedWith(Error);
+      .to.not.eventually.be.rejectedWith(Error);
   });
 });

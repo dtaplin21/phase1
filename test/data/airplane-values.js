@@ -2,44 +2,37 @@ const VALID = 'validValues';
 const INVALID = 'invalidValues';
 
 module.exports = {
-  flightNumber: {
+  airlineCode: {
     [VALID]: [
-      'UA1', 
-      'BA98', 
-      'BA170',
-      'DL8869',
+      'UA',
+      'BA', 
+      'DL',
+      'AA',
     ],
     [INVALID]: [
       null,
-      'ua1',
-      'UA',
+      '',
+      'ua',
+      'B',
       'ABC',
-      'BA98765',
-      '987',
-      '987654',
-      'B98765',
-      'UA1B',
     ],
   },
 
-  model: {
+  flightNumber: {
     [VALID]: [
-      '777',
-      'A380',
-      'DC-10',
-      'L-1011',
-      '123',
-      'ABC',
-      '123456',
-      'ABCDEF',
+      '1',
+      '98',
+      '170',
+      '8869',
     ],
     [INVALID]: [
       null,
-      '12',
-      '1234567',
-      'AB',
-      'ABCDEFG',
-    ],
+      '',
+      '1B',
+      'ABC',
+      '98765',
+      '987654',
+    ]
   },
 
   inService: {
@@ -50,20 +43,6 @@ module.exports = {
     ],
     [INVALID]: [
       null,
-    ],
-  },
-
-  homeBase: {
-    [VALID]: [
-      'LAX',
-      'JFK',
-    ],
-    [INVALID]: [
-      null,
-      '123',
-      'AB1',
-      'AB',
-      'ABCD',
     ],
   },
 
@@ -96,22 +75,6 @@ module.exports = {
       -1,
       854,
       1000,
-    ],
-  },
-
-  cruisingAltitudeFt: {
-    [VALID]: [
-      500,
-      9000, // 9,000
-      20000, // 20,000
-      41000, // 41,000
-      null,
-    ],
-    [INVALID]: [
-      -1,
-      0,
-      400,
-      42000, // 42,000
     ],
   },
 

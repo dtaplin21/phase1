@@ -8,12 +8,12 @@ const { runValidations, runConstraints } = require('./utils/test-utils');
 const data = require('./data/airplane-values');
 const { VALID, INVALID } = data;
 
-describe('`homeBase` has the proper constraints and validations', () => {
+describe('`flightNumber` has the proper constraints and validations', () => {
   before(async function () {
     return await resetDB();
   });
 
-  const columnName = 'homeBase';
+  const columnName = 'flightNumber';
 
   it('allows valid data', async () => {
     for (let value of data[columnName][VALID]) {

@@ -45,14 +45,12 @@ the **.env.example** file into the newly created **.env** file.
 Your employer wants you to create a feature for your users to track the status
 and data of airplanes. An airplane should have the following attributes:
 
+* `airlineCode`
 * `flightNumber`
-* `model` (type of airplane)
 * `inService` (flag indicating if this airplane is operating or not) - should
   have a default value of `true`
-* `homeBase` (airport code)
 * `maxNumPassengers` (maximum number of passengers that the airplane can hold)
 * `currentNumPassengers` (current number of passengers on the airplane)
-* `cruisingAltitudeFt` (altitude in feet)
 * `firstFlightDate` (date of the first official flight with passengers)
 
 Your job is to create a database schema as well as a Sequelize model for this
@@ -63,10 +61,10 @@ feature.
 Here is some **important** information you should know about how the data in the
 schema should be represented:
 
-* **no two airplanes** should have the same `flightNumber`
-* `currentNumPassengers` cannot be greater than `maxNumPassengers`
-* the combination of `homeBase` and `cruisingAltitudeFt` **cannot be repeated**
 * `inService` should have a default value of `true`
+* `currentNumPassengers` cannot be greater than `maxNumPassengers`
+* `currentNumPassengers` **must be null** if `inService` is `false`
+* the combination of `airlineCode` and `flightNumber` **cannot be repeated**
 * the table name should be `Airplanes`
 * the model name should be `Airplane`
 
@@ -96,25 +94,29 @@ npm test
 To run each test file individually:
 
 ```bash
-npm test test/00-flightNumber-spec.js
-npm test test/01-model-spec.js
+npm test test/00-airlineCode-spec.js
+npm test test/01-flightNumber-spec.js
 npm test test/02-inService-spec.js
-npm test test/03-homeBase-spec.js
-npm test test/04-maxNumPassengers-spec.js
-npm test test/05-currentNumPassengers-spec.js
-npm test test/06-cruisingAltitudeFt-spec.js
-npm test test/07-firstFlightDate-spec.js
-npm test test/08-homeBase-cruisingAltitudeFt-spec.js
-npm test test/09-currentNumPassengers-maxNumPassengers-spec.js
-npm test test/10-createdAt-spec.js
-npm test test/11-updatedAt-spec.js
+npm test test/03-maxNumPassengers-spec.js
+npm test test/04-currentNumPassengers-spec.js
+npm test test/05-firstFlightDate-spec.js
+npm test test/06-airlineCode-flightNumber-spec.js
+npm test test/07-currentNumPassengers-maxNumPassengers-spec.js
+npm test test/08-currentNumPassengers-inService-spec.js
+npm test test/09-createdAt-spec.js
+npm test test/10-updatedAt-spec.js
 ```
 
 To remove the extra logging in the terminal when you run the test specs, in the
 `config/database.js` file, comment in the line `logging: false`.
+
+**HINT**: Use the [Sequelize docs on Validations and Constraints] to fill out
+your model-level validations.
 
 ## Submission
 
 1. Delete the **node_modules** directory from your project
 2. Zip your project
 3. Submit the zip folder
+
+[Sequelize docs on Validations and Constraints]: https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/

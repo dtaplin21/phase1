@@ -8,12 +8,12 @@ const { runValidations, runConstraints } = require('./utils/test-utils');
 const data = require('./data/airplane-values');
 const { VALID, INVALID } = data;
 
-describe('`flightNumber` has the proper constraints and validations', () => {
+describe('`currentNumPassengers` has the proper constraints and validations', () => {
   before(async function () {
     return await resetDB();
   });
 
-  const columnName = 'flightNumber';
+  const columnName = 'currentNumPassengers';
 
   it('allows valid data', async () => {
     for (let value of data[columnName][VALID]) {
@@ -23,6 +23,13 @@ describe('`flightNumber` has the proper constraints and validations', () => {
       )
         .to.not.eventually.be.rejectedWith(Error);
     }
+
+    // test null in SQLite3
+    await expect(
+      runConstraints({ [columnName]: null }),
+      `"${columnName}" was supposed to pass constraints when set to "NULL"`
+    )
+      .to.not.eventually.be.rejectedWith(Error);
   });
 
   it('does not allow invalid data', async () => {
@@ -33,25 +40,5 @@ describe('`flightNumber` has the proper constraints and validations', () => {
       )
         .to.eventually.be.rejectedWith(Error);
     }
-
-    // test for uniqueness in SQLite3
-    let uniqueValue = '9876543210';
-    await expect(
-      runConstraints({ [columnName]: uniqueValue }, false),
-      `"${columnName}" was not supposed to fail constraints when set to "${uniqueValue}"`
-    )
-      .to.not.eventually.be.rejectedWith(Error);
-    await expect(
-      runConstraints({ [columnName]: uniqueValue }),
-      `"${columnName}" was supposed to fail constraints when there are duplicate values`
-    )
-      .to.eventually.be.rejectedWith(Error);
-
-    // test not null in SQLite3
-    await expect(
-      runConstraints({ [columnName]: null }),
-      `"${columnName}" was supposed to fail constraints when set to "NULL"`
-    )
-      .to.eventually.be.rejectedWith(Error);
   });
 });

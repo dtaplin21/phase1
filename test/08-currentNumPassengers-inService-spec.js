@@ -27,5 +27,26 @@ describe('`currentNumPassengers` must be null if `inService` is true', () => {
       `Incorrectly passed validations when "${columnName}" was set to "${value}" and "${otherColumnName}" was set to "${otherValue}"`
     )
       .to.eventually.be.rejectedWith(Error);
+
+    value = null;
+    await expect(
+      runValidations({
+        [columnName]: value,
+        [otherColumnName]: otherValue
+      }),
+      `Incorrectly failed validations when "${columnName}" was set to "${value}" and "${otherColumnName}" was set to "${otherValue}"`
+    )
+      .to.eventually.be.fulfilled;
+
+    value = undefined;
+    await expect(
+      runValidations({
+        airlineCode: "BB",
+        [columnName]: value,
+        [otherColumnName]: otherValue
+      }),
+      `Incorrectly failed validations when "${columnName}" was set to "${value}" and "${otherColumnName}" was set to "${otherValue}"`
+    )
+      .to.eventually.be.fulfilled;
   });
 });

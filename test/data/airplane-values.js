@@ -65,11 +65,12 @@ module.exports = {
 
   currentNumPassengers: {
     [VALID]: [
+      null,
+      undefined,
       853,
       550,
       150,
-      0,
-      null,
+      0
     ],
     [INVALID]: [
       -1,

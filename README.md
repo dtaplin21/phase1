@@ -34,6 +34,13 @@ configuration for this application.
 Download the starter from the Download link at the bottom of this page.
 
 Run `npm install` to install the dependencies listed in the last section.
+Make sure there are **no spaces in your folder's local path**. For example, if
+the starter project is in a directory path that looks like this,
+`/Users/dave/Desktop/App Academy/assessment-for-sprint-11 2`, the dependencies
+will not install properly. Make sure your starter's directory path looks
+something like this instead,
+`/Users/dave/Desktop/App-Academy/assessment-for-sprint-11-2`. You can see
+what the directory path is by running the command `pwd`.
 
 Run `npm test` to run the all the test specs at any given time.
 
@@ -83,7 +90,8 @@ this data well.
 You should create:
 
 * one or more migration files with the proper database-level constraints
-* a model file with the proper model-level validations
+* a model file with the proper model-level validations (note: you cannot use
+  model-**wide** validations for this assessment.)
 
 To check your constraints and validations, run the tests:
 

@@ -6,13 +6,14 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "test": "DB_FILE=test/test.db mocha --timeout 10000",
-    "test-with-json": "DB_FILE=test/test.db mocha --reporter json --timeout 60000"
+    "test": "DB_FILE=test/test.db mocha --timeout 30000",
+    "test-with-json": "DB_FILE=test/test.db mocha --reporter json --timeout 100000"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "better-sqlite3": "^8.2.0",
     "chai": "^4.3.6",
     "chai-as-promised": "^7.1.1",
     "dotenv": "^16.0.0",

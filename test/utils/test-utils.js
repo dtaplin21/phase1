@@ -17,7 +17,7 @@ function getInsertValues(values) {
   values = { ...values };
   COLUMN_NAMES.forEach(columnName => {
     if (!(columnName in values)) {
-      values[columnName] = data[columnName][VALID][0];
+      values[columnName] = data[columnName][VALID][0]; // first VALID data value
     }
   });
   return values;
